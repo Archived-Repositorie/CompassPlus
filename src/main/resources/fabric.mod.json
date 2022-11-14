@@ -28,7 +28,8 @@
     "fabricloader": ">=0.14.10",
     "fabric-api": "*",
     "minecraft": "~1.19",
-    "java": ">=17"
+    "java": ">=17",
+    "ivycore"; "*"
   },
   "suggests": {
   }
