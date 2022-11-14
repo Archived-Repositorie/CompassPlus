@@ -16,6 +16,7 @@ public class Main implements PreLaunchEntrypoint {
         try {
             CONFIG = ModConfigs.readConfig();
         } catch (IOException ignored) {
+            ignored.printStackTrace();
             CONFIG = new ModConfigs();
             try {
                 ModConfigs.writeConfig(CONFIG);

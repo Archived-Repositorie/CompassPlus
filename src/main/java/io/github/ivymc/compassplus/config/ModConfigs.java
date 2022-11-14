@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ModConfigs {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    public final boolean enabled = false;
-    public final boolean reduceDebug = true;
+    public boolean enabled = false;
+    public boolean reduceDebug = false;
 
 
     public static void writeConfig(ModConfigs config) throws IOException {

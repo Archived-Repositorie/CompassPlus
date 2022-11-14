@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityMixin {
     @Inject(method = "updatePositionAndAngles", at = @At("HEAD"))
     private void updatePositionAndAngles(double x, double y, double z, float yaw, float pitch, CallbackInfo ci) {
-        Main.g.LOGGER.info(String.valueOf(Main.CONFIG.enabled));
         if(!Main.CONFIG.enabled) return;
 
         if(!((Entity) (Object) this instanceof ServerPlayerEntity player)) return;
@@ -44,12 +43,11 @@ public class EntityMixin {
             name = "SOUTH EAST";
         var server = player.getServer();
 
-        if(!server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO) && Main.CONFIG.reduceDebug) {
+        if(Main.CONFIG.reduceDebug && !server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO)) {
             var rule = server.getGameRules().get(GameRules.REDUCED_DEBUG_INFO);
             rule.set(true, server);
         }
         int[] pos = {player.getBlockPos().getX(), player.getBlockPos().getY(), player.getBlockPos().getZ()};
-        Main.g.LOGGER.info(String.valueOf(pos));
         player.sendMessageToClient(Text.of(String.format("X:%d Y:%d Z:%d %s", pos[0], pos[1], pos[2], name)), true);
     }
 }
