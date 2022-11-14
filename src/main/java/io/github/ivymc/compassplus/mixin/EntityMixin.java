@@ -48,6 +48,6 @@ public class EntityMixin {
             rule.set(true, server);
         }
         int[] pos = {player.getBlockPos().getX(), player.getBlockPos().getY(), player.getBlockPos().getZ()};
-        player.sendMessageToClient(Text.of(String.format("X:%d Y:%d Z:%d %s", pos[0], pos[1], pos[2], name)), true);
+        player.sendMessage(Text.of(String.format("X:%d Y:%d Z:%d %s", pos[0], pos[1], pos[2], name)), true);
     }
 }
