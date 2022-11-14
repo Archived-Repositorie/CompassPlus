@@ -3,25 +3,25 @@
   "id": "modid",
   "version": "${version}",
 
-  "name": "Example Server Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "CompassPlus",
+  "description": " A lot better compass ",
   "authors": [
-    "Me!"
+    "JustFoxx"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/JustFoxx/CompassPlus",
+    "sources": "https://github.com/JustFoxx/CompassPlus"
   },
 
   "license": "LGPL-3.0",
   "environment": "*",
   "entrypoints": {
-    "server": [
-      "io.github.ivymc.example.Main"
+    "preLaunch": [
+      "io.github.ivymc.compassplus.Main"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "compassplus.json"
   ],
 
   "depends": {
