@@ -21,6 +21,12 @@ public class EntityMixin {
         if(!Main.CONFIG.enabled) return;
 
         if(!((Entity) (Object) this instanceof ServerPlayerEntity player)) return;
+        var server = player.getServer();
+
+        if(Main.CONFIG.reduceDebug && !server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO)) {
+            var rule = server.getGameRules().get(GameRules.REDUCED_DEBUG_INFO);
+            rule.set(true, server);
+        }
         if(!(player.getMainHandStack().isOf(Items.COMPASS) || player.getOffHandStack().isOf(Items.COMPASS))) return;
 
         float degreee = MathHelper.wrapDegrees(player.getHeadYaw());
@@ -41,12 +47,7 @@ public class EntityMixin {
             name = "EAST";
         else if (degreee > -67.5 && degreee <= -22.5)
             name = "SOUTH EAST";
-        var server = player.getServer();
 
-        if(Main.CONFIG.reduceDebug && !server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO)) {
-            var rule = server.getGameRules().get(GameRules.REDUCED_DEBUG_INFO);
-            rule.set(true, server);
-        }
         int[] pos = {player.getBlockPos().getX(), player.getBlockPos().getY(), player.getBlockPos().getZ()};
         player.sendMessage(Text.of(String.format("X:%d Y:%d Z:%d %s", pos[0], pos[1], pos[2], name)), true);
     }
