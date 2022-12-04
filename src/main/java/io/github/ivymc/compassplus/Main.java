@@ -1,28 +1,11 @@
 package io.github.ivymc.compassplus;
 
-import io.github.ivymc.compassplus.config.ModConfigs;
-import io.github.ivymc.ivycore.Global;
-import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
+import io.github.ivymc.compassplus.player.Helper;
+import net.fabricmc.api.ModInitializer;
 
-import java.io.IOException;
-
-public class Main implements PreLaunchEntrypoint {
-    public static Global g = new Global("compassplus");
-    public static ModConfigs CONFIG;
-
+public class Main implements ModInitializer {
     @Override
-    public void onPreLaunch() {
-        try {
-            CONFIG = ModConfigs.readConfig();
-        } catch (IOException ignored) {
-            ignored.printStackTrace();
-            CONFIG = new ModConfigs();
-            try {
-                ModConfigs.writeConfig(CONFIG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void onInitialize() {
+        Helper.register();
     }
 }
