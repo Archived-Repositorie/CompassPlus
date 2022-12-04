@@ -1,10 +1,9 @@
 package io.github.ivymc.compassplus.mixin;
 
-import io.github.ivymc.compassplus.Main;
+import io.github.ivymc.compassplus.Configs;
+import io.github.ivymc.compassplus.player.Helper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.server.command.GameRuleCommand;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -15,19 +14,24 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
-public class EntityMixin {
+public abstract class EntityMixin {
     @Inject(method = "updatePositionAndAngles", at = @At("HEAD"))
     private void updatePositionAndAngles(double x, double y, double z, float yaw, float pitch, CallbackInfo ci) {
-        if(!Main.CONFIG.enabled) return;
+        if(!Configs.commonConfig.data.enabled) return;
 
         if(!((Entity) (Object) this instanceof ServerPlayerEntity player)) return;
         var server = player.getServer();
 
-        if(Main.CONFIG.reduceDebug && !server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO)) {
+        if(Configs.commonConfig.data.reduceDebug && !server.getGameRules().getBoolean(GameRules.REDUCED_DEBUG_INFO)) {
             var rule = server.getGameRules().get(GameRules.REDUCED_DEBUG_INFO);
             rule.set(true, server);
         }
+        if(!Configs.compassConfig.data.enabled) return;
         if(!(player.getMainHandStack().isOf(Items.COMPASS) || player.getOffHandStack().isOf(Items.COMPASS))) return;
+
+        if(Configs.compassConfig.data.rightClick && !Helper.of(player).getData().rightClick) {
+            return;
+        }
 
         float degreee = MathHelper.wrapDegrees(player.getHeadYaw());
         String name = "";
