@@ -45,7 +45,7 @@ public abstract class CompassItemMixin extends Item {
         if(FabricLoader.getInstance().isModLoaded("levelz")) {
             List<Object> levelList = LevelLists.customItemList;
             if (!PlayerStatsManager.playerLevelisHighEnough(player, levelList, "minecraft:compass", true)) {
-                player.sendMessage(new TranslatableText("item.levelz." + levelList.get(0) + ".tooltip", levelList.get(1)).formatted(Formatting.RED), true);
+                player.sendMessage(new TranslatableText("item.levelz." + levelList.get(levelList.indexOf("minecraft:compass") + 1) + ".tooltip", levelList.get(levelList.indexOf("minecraft:compass") + 2)).formatted(Formatting.RED), true);
                 return false;
             }
         }
