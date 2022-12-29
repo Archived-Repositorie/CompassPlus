@@ -1,25 +1,19 @@
 package io.github.ivymc.compassplus.mixin;
 
 import io.github.ivymc.compassplus.Configs;
+import io.github.ivymc.compassplus.compatibility.LevelZCompatibility;
 import io.github.ivymc.compassplus.player.Data;
 import io.github.ivymc.compassplus.player.Helper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.levelz.data.LevelLists;
-import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CompassItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-
-import java.util.List;
 
 @Mixin(CompassItem.class)
 public abstract class CompassItemMixin extends Item {
@@ -42,12 +36,11 @@ public abstract class CompassItemMixin extends Item {
     }
     public boolean canUse(PlayerEntity player) {
         if(FabricLoader.getInstance().isModLoaded("levelz")) {
-            List<Object> levelList = LevelLists.compassList;
-            if (!PlayerStatsManager.playerLevelisHighEnough(player, levelList, null, true)) {
-                player.sendMessage(Text.translatable("item.levelz." + levelList.get(0) + ".tooltip", levelList.get(1)).formatted(Formatting.RED), true);
+            if (!LevelZCompatibility.canUse(player)) {
                 return false;
             }
         }
+
         return true;
     }
 }
